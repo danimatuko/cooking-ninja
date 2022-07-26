@@ -4,7 +4,7 @@ import Home from "./pages/home/Home";
 import Create from "./pages/create/Create";
 import Search from "./pages/search/Search";
 import Recipe from "./pages/recipe/Recipe";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
