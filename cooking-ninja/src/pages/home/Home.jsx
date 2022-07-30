@@ -1,6 +1,6 @@
 import React from "react";
 import RecipeList from "../../components/RecipeList/RecipeList";
-import useFetch from "../../hooks/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import "./home.css";
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div className="home">
       {error && <p className="error">{error}</p>}
-      {isPending && <p className="loading">Loading</p>}
+      {isPending && <p className="loading">isPending</p>}
       {recipes && <RecipeList recipes={recipes} />}
     </div>
   );
