@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { firestore } from "../../firebase/config";
 import { useFetch } from "../../hooks/useFetch";
 import "./Create.css";
 
@@ -11,21 +12,23 @@ const Create = () => {
   const [ingredients, setIngredients] = useState([]);
   const ingredientInput = useRef(null);
 
-  const { postData, data } = useFetch("http://localhost:3000/recipes", "POST");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postData({
+    const doc = {
       title,
       method,
       cookingTime: cookingTime + " Mintues",
       ingredients,
-    });
+    };
+
+    firestore
+      .collection("recipes")
+      .add(doc)
+      .then(() => navigate("/"))
+      .catch((err) => console.log(err.message));
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    data && navigate("/");
-  }, [data]);
 
   const addIngredient = (e) => {
     e.preventDefault();

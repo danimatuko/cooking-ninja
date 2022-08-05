@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme";
 import "./RecipeList.css";
+import TrashIcon from "../../assets/trash.svg";
+import { firestore } from "../../firebase/config";
 
 const RecipeList = ({ recipes }) => {
   const { mode } = useTheme();
@@ -9,6 +11,10 @@ const RecipeList = ({ recipes }) => {
   if (recipes.length === 0) {
     return <h1 className="error">No recipes found</h1>;
   }
+
+  const handleDelete = (id) => {
+    firestore.collection("recipes").doc(id).delete();
+  };
 
   return (
     <div className="recipe-list">
@@ -18,6 +24,11 @@ const RecipeList = ({ recipes }) => {
           <p>{recipe.cookingTime} to make</p>
           <div>{recipe.method.substring(0, 100)}...</div>
           <Link to={`/recipes/${recipe.id}`}>Cook This</Link>
+          <img
+            src={TrashIcon}
+            className="delete"
+            onClick={() => handleDelete(recipe.id)}
+          />
         </div>
       ))}
     </div>
